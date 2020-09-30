@@ -1,0 +1,294 @@
+{
+"": """\
+       [b]modo ayuda[/b]
+
+* la primer puntea a un elemento
+   marcado de la pantalla muestra
+   el mensaje de ayuda asociada.
+
+* la segunda puntea va a ejecutar
+   la funcionalidad detras del
+   elemento de la pantalla.
+
+puntea al signo de interrogación
+([b]?[/b]) para salir de ese
+modo de ayuda.""",
+#==================================
+"help_app_state#sound_volume": """\
+    ajustar el volumen
+
+para silenciar todos los sonidos
+puntea a la izquierda.
+
+volumen actual: {round(state_value * 100)}%""",
+#==================================
+"help_flow#add_item":
+    {'': """\
+puntea para crear un
+nuevo registro.""",
+    'next_help_id': "help_flow#change_item_id", },
+#----------------------------------
+"help_flow#change_font_size": """\
+el tamaño del fuente
+ha cambiado a [b]{self.font_size}[/b].""",
+#----------------------------------
+"help_flow#change_item_id": """\
+ene ese editor de registro se puede
+especificar y cambiar el nombre del
+registro.
+
+toque el botón con el símbolo [b]--->[/b]
+(a la izquierda en el editor) para
+hacer la nueva entrada una sub-lista.
+
+toque fuera del editor para cerrarlo.
+
+para prevenir la creación de un
+registro nuevo, borra el nombre antes
+de cerrar el editor.""",
+#----------------------------------
+"help_flow#change_item_sel": """\
+el color de este botón
+indica si esto registro es
+seleccionado o
+deseleccionado.
+
+ahora es [b]{"seleccionado" if tuple(self.square_fill_color) == app.main_app.selected_item_ink else
+             "deseleccionado"}[/b].
+
+puntea para intercambiarlo.
+
+puntea/toque largo para
+exportar listas.""",
+#----------------------------------
+"help_flow#change_lang_code": """\
+toque para cambiar el idioma
+a [b]'{main_app.get_txt_(self.lang_code)}'[/b].""",
+#----------------------------------
+"help_flow#change_light_theme": """\
+puntea para cambiar el color del
+fondo a [b]claro[/b] o a [b]oscuro[/b].""",
+#----------------------------------
+"help_flow#confirm_item_deletion": """\
+toque para borrar el
+registro enfocado.
+
+hay que confirmar en el
+posteriormente mostrado
+diálogo la eliminación
+definitiva.""",
+#----------------------------------
+"help_flow#confirm_item_sel": """\
+cambiar la selección o deselección
+de todas las entradas de esta
+sub-lista.
+
+la mayoría de las entradas en este
+sub-lista se muestran a la
+izquierda, la minoría de la
+derecha.
+
+puntea a la mitad de que tú
+quieres cambiar a todas los
+registros.
+
+la de-/selección debe ser
+confirmado en el
+posteriormente mostrado
+diálogo.""",
+#----------------------------------
+"help_flow#drag_item": """\
+puntea esta botón pare el
+registro [b]'{flow_key(self.tap_flow_id)}'[/b]
+esta enfocado, por ejemplo
+para editarlo o borrarlo.
+
+toque, mantén y muéve para
+cambiar la orden o la posición
+de este registro.
+
+mover el registro a una
+sub-lista para moverlo ahi.
+
+cuando se suelta por encima del botón
+para dejar una sub-lista (marcado con
+[b]<---[/b] símbolo) el registro queda
+aplazado a la lista sobre la actual
+sub-lista.
+
+[b]nota: [/b]para mover registros
+hay que salir del modo de ayuda.""",
+#----------------------------------
+"help_flow#edit_font_size": """\
+pulse para seleccionar uno de
+los tamaños de las fuentes
+disponibles.""",
+#----------------------------------
+"help_flow#edit_item": """\
+toque para cambiar el nombre del
+registro o para convertirlo en un
+sub-lista.
+
+borrando el nombre
+de la entrada resulta en el
+eliminado de este registro.""",
+#----------------------------------
+"help_flow#enter_item": """\
+puntea para los registros de la
+sub-lista [b]'{flow_key(self.tap_flow_id)}'[/b]
+van ser mostradas.""",
+#----------------------------------
+"help_flow#extract_node": """\
+exportar o copiar los registros
+especificadas a la carpeta
+{main_app.documents_root_path}
+o al portapapeles.""",
+#----------------------------------
+"help_flow#import_node": """\
+añadir registros de los archivos TXT que se encuentran en
+{main_app.documents_root_path}
+a una sub-lista nueva.""",
+#----------------------------------
+"help_flow#jump_node": """\
+pulse para cambiar/mostrar a la lista
+[b]'{main_app.flow_path_text(main_app.flow_path_from_text(self.text), min_len=18)}'[/b].""",
+#----------------------------------
+"help_flow#leave_item": """\
+toque para salir y volver a la
+lista padre.""",
+#----------------------------------
+"help_flow#open_color_picker":
+    {'': """\
+puntea para el editor
+de color ser mostrado.
+
+aquí puedes cambiar el
+color que indica si un
+registro sea
+[b]{dict(selected_item_ink='seleccionado',
+      unselected_item_ink='deseleccionado',
+      flow_id_ink='enfocado',
+      flow_path_ink='movible',
+      ).get(self.color_name)}[/b].""",
+    'after': """\
+toque de nuevo en el botón
+de color para cerrar el editor
+de color.
+
+en el editor de color
+puntea dos veces en rápida
+sucesión al círculo de color
+o usar el deslizador para
+cambiar el color.""", },
+#----------------------------------
+"help_flow#open_flow_path_jumper": """\
+puntea para cambiar/saltar
+a la lista especificada.""",
+#----------------------------------
+"help_flow#open_node_info": """\
+puntea para mostrar los propiedades
+de la sub-lista especificada.""",
+#----------------------------------
+"help_flow#open_user_preferences":
+    {'': """\
+este pomo del engranaje sirve para
+abrir la configuración del usuario.""",
+    'after': """\
+las opciones que se muestran ahora
+se utilizan para configurar el
+por ejemplo, para los colores
+y el tamaño de la letra.
+
+pulse en las opciones individuales
+para más asistencia.""", },
+#----------------------------------
+"help_flow#paste_node": """\
+añadir registro(s) del portapapeles
+a la lista actual.
+
+textos multilineales van a crear
+varias registros, uno para cada
+fila del texto.""",
+#----------------------------------
+"help_flow#toggle_filter":
+    {'': """\
+puntea a este botón para [b]{"mostrar" if app.app_states[self.filter_name] else "ocultar"}[/b]
+los registros [b]{dict(selected='seleccionados', unselected='deseleccionados').get(self.name_part)}[/b].""",
+    'after': """\
+ahora se [b]{"ocultan" if app.app_states[self.filter_name] else "mostran"}[/b] los
+registros [b]{dict(selected='seleccionados', unselected='deseleccionados').get(self.name_part)}[/b].""", },
+#----------------------------------
+"help_flow#toggle_node_or_item": """\
+cambiar tipo de este {'' if root.title else 'nuevo '}registro.
+
+toque para cambiar el tipo a
+[b]{'un registro normal' if self.state == 'down' else 'una sub-lista'}[/b].
+
+toque fuera del editor para cerrarlo.""",
+#==================================
+"after focused '{focused_id}'": "después del enfocado '{focused_id}'",
+"before focused item '{focused_id}'": "antes del enfocado '{focused_id}'",
+"cannot be equal to '{FLOW_PATH_ROOT_ID}'": "no puede ser igual a '{FLOW_PATH_ROOT_ID}'",
+"cannot contain '{FLOW_PATH_TEXT_SEP}'": "no puede contener '{FLOW_PATH_TEXT_SEP}'",
+"cannot start with one of the characters '{INVALID_ITEM_ID_PREFIX_CHARS}'":
+    "no puede comenzar con uno de los caracteres '{INVALID_ITEM_ID_PREFIX_CHARS}'",
+"clipboard": "portapapeles",
+"confirm deletion of ": "borrar ",
+"confirm deselection of {count} sub-items in '{root.item_id}'":
+    {'many': "confirmar deselección de los {count} registros de '{root.item_id}'",
+     'one': "confirmar deselección del registro '{root.item_id}'", },
+"confirm selection of {count} sub-items in '{root.item_id}'":
+    {'many': "confirmar selección de los {count} registros de '{root.item_id}'",
+     'one': "confirmar la selección del registro '{root.item_id}'", },
+"copy all node items": "copiar los registros",
+"copy {'' if sel_status else 'un'}selected node items":
+    "copiar registros {'' if sel_status else 'de'}seleccionados",
+"{count} error(s) in adding {len(items)} item(s)":
+    {'many': "{count} errores en añadir de {len(items)} nuevos registros",
+     'one':  "error en añadir nuevo registro"},
+"current list begin": "principio de la lista actual",
+"current list end": "final de la lista actual",
+"cut all node items": "cortar registros",
+"dark": "oscuro",
+"de": "deutsch",
+"delete all node items": "borrar registros",
+"deselect": "deseleccione",
+"en": "english",
+"Error": "error",
+"error on adding new item '{item_id}'": "error en insertar el nuevo registro '{item_id}'",
+"error on editing item '{item_id}'": "error en editar el registro '{item_id}'",
+"es": "español",
+"export all node items": "exportar registros",
+"export error": "error en exportar",
+"export file": "archivo exportado",
+"export {'' if sel_status else 'un'}selected node items":
+    "exportar registros {'' if sel_status else 'de'}seleccionados",
+"flow_id_ink": "{'color del ' if app.landscape else ''}registro enfocado",
+"flow_path_ink": "{'color de los botónes de ' if app.landscape else ''}navigación de listas",
+"{FLOW_PATH_ROOT_ID} list begin": "principio de la lista {FLOW_PATH_ROOT_ID}",
+"{FLOW_PATH_ROOT_ID} list end": "final de la lista {FLOW_PATH_ROOT_ID}",
+"has to be a string but got {type(item_id)}": "no es una cadena de caracteres sino un {type(item_id)}",
+"has to be non-empty": "no puede ser vacio",
+"id": "nombre",
+"import error(s)": {'one': "error en importar", 'many': "{count} errores en importar"},
+"import node/item(s)": "importar registro(s)",
+" including their {count} sub-items": {'many': " incluyendo sus {count} registros",
+                                  'one': " incluyendo su registro"},
+"into focused sub-list '{focused_id}'": "dentro de la sub-lista '{focused_id}'",
+"Irmi's Shopping Lisz": "Irmi's listas de compras",
+"item id '{item_id}' ": "nombre del registro '{item_id}' ",
+"item id '{new_id}' exists already": "el nombre de registro '{new_id}' ya existe",
+"item '{root.item_id}'": "registro '{root.item_id}'",
+"light": "claro",
+"... loading ...": "... cargando ...",
+"neither clipboard nor '{self.documents_root_path}' contains items to import":
+    "no hay registros para import en el portapapeles ni en '{self.documents_root_path}'",
+"node '{node_id}' with ": "sub-lista '{node_id}' con ",
+"no extract options available for this item/node": "no hay opciones para extraer para este registro",
+"select": "seleccione",
+"selected_item_ink": "{'color de los ' if app.landscape else ''}registros seleccionados",
+"selected leaf count": "registros seleccionados",
+"{count} sub-items of '{root.item_id}'": "los {count} registros en '{root.item_id}'",
+"unselected_item_ink": "{'color de los ' if app.landscape else ''}registros deseleccionados",
+"unselected leaf count": "registros deseleccionados",
+}

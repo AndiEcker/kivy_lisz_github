@@ -1,0 +1,306 @@
+{
+"": """\
+    [b]interaktiver hilfemodus[/b]
+
+alle bildschirm-elemente sind
+deaktiviert.
+
+* der erste tipper auf ein
+   bildschirm-element zeigt
+   den zugehörigen hilfetext
+   und reaktiviert es.
+
+* beim zweiten tip wird die
+   jeweilige funktion ganz
+   normal ausgeführt.
+
+tippe auf das fragezeichen symbol
+([b]?[/b]) links oben um den
+hilfemodus wieder zu verlassen.""",
+#==================================
+"help_app_state#sound_volume": """\
+lautstärke ändern.
+
+tippe ganz links um
+alle akustischen
+signale zu unterdrücken.
+
+aktuelle lautstärke: {round(state_value * 100)}%""",
+#==================================
+"help_flow#add_item":
+    {'': """\
+tippe zur anlage eines neuen eintrags.
+
+tippe und halte zum importieren von
+sub-listen aus der zwischenablage
+oder dateien.""",
+    'next_help_id': "help_flow#change_item_id", },
+#----------------------------------
+"help_flow#change_font_size": """\
+schriftgröße auf
+[b]{self.font_size}[/b] geändert.""",
+#----------------------------------
+"help_flow#change_item_id": """\
+im angezeigten eintrag-editor
+wird der name des eintrags
+eingegeben bzw. geändert.
+
+tippe of den knopf mit dem
+[b]--->[/b] symbol (links im
+eintrag-editor) um den eintrag
+in eine unter-liste zu ändern.
+
+tippe außerhalb des eintrag-
+editors um ihn zu schließen.
+
+lösche den namen des eintrags
+um den eintrag zu löschen bzw.
+das anlegen eines neuen
+eintrags zu verhindern.""",
+#----------------------------------
+"help_flow#change_item_sel": """\
+die farbe dieses bildschirm-elements
+zeigt an ob dieser eintrag
+ausgewählt oder
+abgewählt ist.
+
+dieser ist [b]{"ausgewählt" if tuple(self.square_fill_color) == app.main_app.selected_item_ink else "abgewählt"}[/b].
+
+tippe zum umzuschalten.
+
+tippe und halte um das
+export-menu anzuzeigen.""",
+#----------------------------------
+"help_flow#change_lang_code": """\
+tippe um die sprache der app
+auf [b]'{main_app.get_txt_(self.lang_code)}'[/b] umzuschalten.""",
+#----------------------------------
+"help_flow#change_light_theme": """\
+tippe um die farbe
+des hintergrunds
+zwischen
+[b]'hell'[/b] oder
+[b]'dunkel'[/b]
+umzuschalten.""",
+#----------------------------------
+"help_flow#confirm_item_deletion": """\
+tippe um einen eintrag zu löschen.
+
+das löschen des eintrags muss
+dabei im daraufhin angezeigten
+dialog bestätigt werden.""",
+#----------------------------------
+"help_flow#confirm_item_sel": """\
+ändere die auswahl bzw. abwahl
+aller einträge dieser unter-liste.
+
+die mehrheitlichen einträge dieser
+unter-liste werden von der linken
+hälfte symbolisiert, die in der
+minderheit von der rechten.
+
+tippe auf die hälfte welche du
+umschalten willst. die
+betroffenen einträge werden
+zur bestätigung auflistet.
+
+tippe und halte um das
+export-menu anzuzeigen.""",
+#----------------------------------
+"help_flow#drag_item": """\
+tippe um den eintrag
+[b]'{flow_key(self.tap_flow_id)}'[/b]
+zu fokussieren (um ihn danach zum
+beispiel zu ändern oder zu löschen).
+
+tippe, halte und schiebe um die
+reihenfolge des eintrags zu ändern.
+beim schieben und loslassen auf eine
+unter-liste wird er in diese verschoben.
+ein loslassen über dem knopf mit dem
+[b]<---[/b] symbol (der zum verlassen
+dieser liste) verschiebt den eintrag
+in die liste oberhalb.
+
+[b]hinweis:[/b] zum verschieben muss
+dieser hilfemodus verlassen werden.""",
+#----------------------------------
+"help_flow#edit_font_size": """\
+tippe um die verfügbaren
+schriftgrößen anzuzeigen.""",
+#----------------------------------
+"help_flow#edit_item": """\
+tippe um den namen des
+eintrags zu ändern oder
+um diesen in eine unter-
+liste umzuwandeln.""",
+#----------------------------------
+"help_flow#enter_item": """\
+tippe um die einträge der unter-liste
+[b]'{flow_key(self.tap_flow_id)}'[/b]
+anzuzeigen.""",
+#----------------------------------
+"help_flow#extract_node": """\
+kopiere oder exportiere einträge
+in das dokumente verzeichnis
+{main_app.documents_root_path}
+oder in die zwischenablage.""",
+#----------------------------------
+"help_flow#import_node": """\
+importiere einträge aus den TXT dateien im verzeichnis
+{main_app.documents_root_path}
+in eine neue unter-liste.""",
+#----------------------------------
+"help_flow#jump_node": """\
+tippe zum wechseln zur liste
+[b]'{main_app.flow_path_text(main_app.flow_path_from_text(self.text), min_len=18)}'[/b].
+
+tippe und halte um das
+export-menu anzuzeigen.""",
+#----------------------------------
+"help_flow#leave_item": """\
+tippe um die aktuelle liste
+zu verlassen und zurück zu der
+liste oberhalb zu wechseln.""",
+#----------------------------------
+"help_flow#open_color_picker":
+    {'': """\
+tippe um den farben-editor
+anzuzeigen.
+
+hier kann die farbe der geändert
+werden, die anzeigt ob ein eintrag
+[b]{dict(selected_item_ink='ausgewählt',
+      unselected_item_ink='abgewählt',
+      flow_id_ink='fokussiert',
+      flow_path_ink='verschiebbar',
+      ).get(self.color_name)}[/b] ist.""",
+    'after': """\
+tippe nochmals auf den farbauswahl-
+knopf um den farben-editor wieder
+zu schließen.
+
+tippe zweimal schnell nacheinander
+auf den farbkreis oder benutze die
+schieberegler um die farbe zu ändern.""", },
+#----------------------------------
+"help_flow#open_flow_path_jumper":
+    {'': """\
+tippe um die anderen listen
+zur auswahl anzuzeigen.
+
+tippe und halte um das
+export-menu anzuzeigen.""",
+    'after': """\
+nach einem weiteren tip auf eine
+der auswahlmöglichkeiten wird zur
+jeweiligen liste gesprungen.""", },
+#----------------------------------
+"help_flow#open_node_info": """\
+tippe um informationen zur
+spezifizierten sub-liste
+anzuzeigen.""",
+#----------------------------------
+"help_flow#open_user_preferences":
+    {'': """\
+dieser zahnrad-knopf dient zum
+öffnen der benutzer-einstellungen.""",
+    'after': """\
+die nun angezeigten optionen
+dienen zur konfiguration der
+app, zum beispiel um farben
+und schriftgröße anzupassen.
+
+tippe auf die einzelnen optionen
+um weitere hilfe zu erhalten.""", },
+#----------------------------------
+"help_flow#paste_node": """\
+neue einträge aus der zwischenablage
+einfügen.
+
+beim einfügen mehrzeiliger texte
+legt jede textzeile einen neuen
+eintrag an.""",
+#----------------------------------
+"help_flow#toggle_filter":
+    {'': """\
+tippe um die [b]{dict(selected='ausgewählten', unselected='abgewählten').get(self.name_part)}[/b]
+einträge [b]{"anzuzeigen" if app.app_states[self.filter_name] else "auszublenden"}[/b].""",
+    'after': """\
+nun werden die [b]{dict(selected='ausgewählten', unselected='abgewählten').get(self.name_part)}[/b]
+einträge [b]{"ausgeblendet/gefiltert" if self.state == 'down' else "angezeigt"}[/b].""", },
+#----------------------------------
+"help_flow#toggle_node_or_item": """\
+typ des {'' if root.title else 'neuen '}eintrags ändern.
+
+tippe um diesen eintrag in
+[b]{'einen normalen eintrag' if self.state == 'down' else 'eine unter-liste'}[/b]
+umzuwandeln.
+
+tippe außerhalb des eintrag-
+editors um diesen zu schließen.""",
+#==================================
+"after focused '{focused_id}'": "hinter dem fokusierten eintrag '{focused_id}'",
+"before focused item '{focused_id}'": "vor dem fokusierten eintrag '{focused_id}'",
+"cannot be equal to '{FLOW_PATH_ROOT_ID}'": "darf nicht gleich '{FLOW_PATH_ROOT_ID}' sein",
+"cannot contain '{FLOW_PATH_TEXT_SEP}'": "darf '{FLOW_PATH_TEXT_SEP}' nicht enthalten",
+"cannot start with one of the characters '{INVALID_ITEM_ID_PREFIX_CHARS}'":
+    "darf nicht mit einem der zeichen '{INVALID_ITEM_ID_PREFIX_CHARS}' beginnen",
+"clipboard": "zwischenablage",
+"confirm deletion of ": "lösche ",
+"confirm deselection of {count} sub-items in '{root.item_id}'": {'many': "{count} einträge in '{root.item_id}' abwählen",
+                                                         'one': "'{root.item_id}' eintrag abwählen"},
+"confirm selection of {count} sub-items in '{root.item_id}'": {'many': "{count} einträge in '{root.item_id}' auswählen",
+                                                       'one': "'{root.item_id}' eintrag auswählen"},
+"copy all node items": "kopiere einträge",
+"copy {'' if sel_status else 'un'}selected node items":
+    "kopiere {'ausgewählte' if sel_status else 'abgewählte'} einträge",
+"{count} error(s) in adding {len(items)} item(s)":
+    {'many': "{count} fehler beim anlegen von {len(items)} neuen einträgen",
+     'one':  "fehler beim anlegen eines neuen eintrags"},
+"current list begin": "begin der aktuellen liste",
+"current list end": "ende der aktuellen liste",
+"cut all node items": "einträge ausschneiden",
+"dark": "dunkel",
+"de": "deutsch",
+"delete all node items": "lösche einträge",
+"deselect": "abwählen",
+"en": "english",
+"Error": "fehler",
+"error on adding new item '{item_id}'": "fehler beim anlegen des neuen eintrags '{item_id}'",
+"error on editing item '{item_id}'": "fehler beim bearbeiten des eintrags '{item_id}'",
+"es": "español",
+"export all node items": "exportiere alle einträge",
+"export error": "export-fehler",
+"export file": "export-datei",
+"export {'' if sel_status else 'un'}selected node items":
+    "exportiere {'ausgewählte' if sel_status else 'abgewählte'} einträge",
+"flow_id_ink": "{'farbe des fokussierten' if app.landscape else 'fokussierter'} eintrag",
+"flow_path_ink": "{'farbe der ' if app.landscape else ''}listen-navigation",
+"{FLOW_PATH_ROOT_ID} list begin": "begin der {FLOW_PATH_ROOT_ID} liste",
+"{FLOW_PATH_ROOT_ID} list end": "ende der {FLOW_PATH_ROOT_ID} liste",
+"has to be a string but got {type(item_id)}": "ist keine zeichenkette sondern ein {type(item_id)}",
+"has to be non-empty": "darf nicht leer sein",
+"id": "name",
+"import error(s)": "import-fehler",
+"import node/item(s)": "importiere einträge",
+" including their {count} sub-items": {'many': " einschließlich deren {count} einträge",
+                                  'one': " einschließlich des eintrags"},
+"into focused sub-list '{focused_id}'": "innerhalb der fokusierten unter-list '{focused_id}'",
+"Irmi's Shopping Lisz": "Irmi's Einkaufslisten",
+"item id '{item_id}' ": "name des eintrags '{item_id}' ",
+"item id '{new_id}' exists already": "den eintrag-namen '{new_id}' gibt es schon",
+"item '{root.item_id}'": "eintrag '{root.item_id}'",
+"light": "hell",
+"... loading ...": "... laden ...",
+"neither clipboard nor '{self.documents_root_path}' contains items to import":
+    "weder in der zwischenablage noch in '{self.documents_root_path}' find einträge zum importieren",
+"no extract options available for this item/node": "für diesen eintrag sind keine extrakt optionen verfügbar",
+"node '{node_id}' with ": "unter-liste '{node_id}' mit ",
+"select": "auswählen",
+"selected_item_ink": "{'farbe der ausgewählten' if app.landscape else 'ausgewählte'} einträge",
+"selected leaf count": "ausgewählte einträge",
+"{count} sub-items of '{root.item_id}'": "{count} einträge in '{root.item_id}'",
+"unselected_item_ink": "{'farbe der abgewählten' if app.landscape else 'abgewählte'} einträge",
+"unselected leaf count": "abgewählte einträge",
+}

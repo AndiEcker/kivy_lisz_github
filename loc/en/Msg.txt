@@ -1,0 +1,222 @@
+{
+"": """\
+[b]interactive help mode[/b]
+
+1st tap on marked screen parts
+    shows a specific help text.
+2nd tap at same screen part will
+    be processed as normal.
+
+tap on icon with question mark ([b]?[/b])
+for to exit the help mode.""",
+#==================================
+"help_app_state#sound_volume": """\
+change sound volume.
+
+tap all to the left
+to mute all sounds.
+
+current volume: [b]{round(state_value * 100)}%[/b]""",
+#==================================
+"help_flow#add_item":
+    {'': """\
+tap for to add a new item.
+
+tap long for list exports.""",
+    'next_help_id': "help_flow#change_item_id", },
+#----------------------------------
+"help_flow#change_font_size": """\
+the font size got
+changed to [b]{self.font_size}[/b].""",
+#----------------------------------
+"help_flow#change_item_id": """\
+this item editor allows
+to enter the item name.
+
+tap the button with the
+[b]--->[/b] icon (at the left)
+for to switch the new item
+between item and sub-list.
+
+tap outside of the item
+editor for to close it.
+
+wipe the item name for to
+cancel the insertion of
+the new item.""",
+#----------------------------------
+"help_flow#change_item_sel": """\
+the color of this button
+shows if this item is
+selected or
+deselected.
+
+this one is [b]{"selected" if tuple(self.square_fill_color) == app.main_app.selected_item_ink else "deselected"}[/b].
+
+tap to toggle the selection state.
+
+tap long for to export lists.""",
+#----------------------------------
+"help_flow#change_lang_code": """\
+change default language to
+[b]'{main_app.get_txt_(self.lang_code)}'[/b].""",
+#----------------------------------
+"help_flow#change_light_theme": """\
+switch app between [b]light[/b]
+and [b]dark[/b] theme.""",
+#----------------------------------
+"help_flow#confirm_item_deletion": """\
+tap for to open a
+dialog for to confirm the
+deletion of the focused
+item or sub-list item.""",
+#----------------------------------
+"help_flow#confirm_item_sel": """\
+change selection of all the
+items of this sub-list.
+
+sub-list with items that are
+in selected and unselected
+state show on the left the
+majority selection state and
+at the right the minority
+selection state.
+
+tapping on any part of the
+selection area of a sub-list item
+will show a popup window for to
+display the item ids of this
+sub-list.
+
+within the popup you can change
+the selection state of all the
+displayed items by tapping on
+the button at the bottom of the
+popup.""",
+#----------------------------------
+"help_flow#drag_item": """\
+tap to focus the item
+[b]'{flow_key(self.tap_flow_id)}'[/b].
+
+(only focused items can
+be edited or deleted.)
+
+tap, hold and drag for
+to change the order or
+position of the item.
+
+drop onto sub-list for
+to move dragged item
+into it.
+
+drop on leave sub-list
+button (with the [b]<---[/b]
+icon) for to move
+item into parent list.""",
+#----------------------------------
+"help_flow#edit_font_size": """\
+tap to display drop down
+with font sizes to select from.""",
+#----------------------------------
+"help_flow#edit_item": """\
+tap to edit the item
+name or for to
+switch item between
+a item or a sub-list.
+
+wipe the item name for
+to delete the item.""",
+#----------------------------------
+"help_flow#enter_item": """\
+tap to enter the sub-list
+[b]'{flow_key(self.tap_flow_id)}'[/b].""",
+#----------------------------------
+"help_flow#extract_node": """\
+export or copy items to the folder
+{main_app.documents_root_path}
+or to the clipboard.""",
+#----------------------------------
+"help_flow#import_node": """\
+import items from the TXT files of the folder
+{main_app.documents_root_path}
+into a new sub-list.""",
+#----------------------------------
+"help_flow#jump_node": """\
+tap to jump to the list
+[b]'{main_app.flow_path_text(main_app.flow_path_from_text(self.text), min_len=18)}'[/b].
+
+tap long for to export it.""",
+#----------------------------------
+"help_flow#leave_item": """\
+exit the current sub-list and go
+back to parent list.""",
+#----------------------------------
+"help_flow#open_color_picker":
+    {'': """\
+tap to open color picker for to
+change the [b]{self.color_name.replace('_', ' ')}[/b].""",
+    'after': """\
+tap to close the color
+picker.
+
+double tap at color circle
+or use the sliders for to
+change [b]{self.color_name.replace('_', ' ')}[/b].""", },
+#----------------------------------
+"help_flow#open_flow_path_jumper":
+    {'': """\
+tap to open drop down list for
+to jump to other sub-list.
+
+tap long for to export lists.""",
+    'after': """\
+drop down with other lists
+opened.""", },
+#----------------------------------
+"help_flow#open_node_info": """\
+tap to show the properties of the
+specified sub-list.""",
+#----------------------------------
+"help_flow#open_user_preferences":
+    {'': """\
+tap to open the user preferences
+drop down menu.""",
+    'after': """\
+in this drop down you can change
+e.g. the theme (dark or light),
+the preferred font size or
+the colors.""", },
+#----------------------------------
+"help_flow#paste_node": """\
+add item(s) from clipboard
+into the current list.
+
+multiline texts will add a
+new item for each text row.""",
+#----------------------------------
+"help_flow#toggle_filter":
+    {'': """\
+tap to [b]{"display" if app.app_states[self.filter_name] else "hide"}[/b] the
+[b]{self.name_part}[/b] list items.""",
+    'after': """\
+now the {self.name_part} list items
+are [b]{"hidden" if self.state == 'down' else "shown"}[/b].""", },
+#----------------------------------
+"help_flow#toggle_node_or_item": """\
+change type of this {'' if root.title else 'new '}item.
+
+tap for to change the item type into
+a [b]{'item' if self.state == 'down' else 'sub-list'}[/b].
+
+tap outside of this item editor for
+to close it.""",
+#==================================
+"de": "deutsch",
+"en": "english",
+"es": "español",
+"flow_id_ink": "{'color of the ' if app.landscape else ''}focussed item",
+"flow_path_ink": "list navigation{' button color' if app.landscape else ''}",
+"import error(s)": {'one': "import error", 'many': "{count} import errors"},
+"selected_item_ink": "{'color of the ' if app.landscape else ''}selected items",
+"unselected_item_ink": "{'color of the ' if app.landscape else ''}unselected items",
+}

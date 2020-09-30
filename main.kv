@@ -1,0 +1,284 @@
+# user interface of kivy_lisz app. Main is the widget tree root layout.
+
+#: import _d ae.kivy_user_prefs
+
+
+<Main@FloatLayout>:
+    BoxLayout:
+        orientation: 'vertical'
+        LiszMenuBar:
+            id: menuBar
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                id: itemsContainer
+                orientation: 'vertical'
+                size_hint_y: None
+    StackLayout:
+        orientation: 'rl-bt' if app.landscape else 'bt-rl'
+        size_hint: None, None
+        size: root.size
+        pos_hint: {'right': 0.93}
+        padding: app.app_states['font_size']
+        spacing: app.app_states['font_size']
+        FlowButton:
+            tap_flow_id: id_of_flow('add', 'item')
+            circle_fill_color: 0, 1, 0, .69
+            size_hint_x: None
+            width: self.height
+            on_alt_tap: app.main_app.show_add_options(self)
+        OptionalButton:
+            tap_flow_id: replace_flow_action(app.app_states['flow_id'], 'edit')
+            circle_fill_color: app.app_states['flow_id_ink'][:3] + (0.69, )
+            visible: flow_action(app.app_states['flow_id']) == 'focus'
+        OptionalButton:
+            tap_flow_id: id_of_flow('confirm', 'item_deletion', flow_key(app.app_states['flow_id']))
+            icon_name: id_of_flow('delete', 'item')
+            square_fill_color: app.app_states['flow_id_ink'][:3] + (0.69, )
+            visible: flow_action(app.app_states['flow_id']) == 'focus'
+
+
+<LiszMenuBar@BoxLayout>:
+    size_hint_y: None
+    height: app.app_states['font_size'] * 1.5
+    HelpToggler:
+        # help mode de-/activation button
+    UserPreferencesButton:
+        size_hint_x: None
+        width: self.height
+    OptionalButton:
+        id: leaveItemButton
+        tap_flow_id: id_of_flow('leave', 'item')
+        circle_fill_color: app.app_states['flow_path_ink'] if app.app_states['flow_path'] else (1, 1, 1, 0.3)
+        visible: len(app.app_states['flow_path']) > 0 and app.main_app.flow_path_action() == 'enter'
+        # `* self.visible` added for to re-calculate width on re-show of this button after hiding it in root node
+        width: self.height * 2.1 * self.visible
+    FlowButton:
+        tap_flow_id: id_of_flow('open', 'flow_path_jumper')
+        text:
+            app.main_app.flow_path_text(app.app_states['flow_path'], min_len=6 if app.landscape else 3) \
+            + app.main_app.flow_key_text(app.app_states['flow_id'], app.landscape)
+        size_hint_x: .39
+        text_size: self.size
+        shorten: True
+        shorten_from: 'left'
+        split_str: '...'
+        halign: 'center'
+        valign: 'middle'
+        on_alt_tap: app.main_app.show_extract_options(self)
+    ListFiltButton:
+        id: listFilterSelected
+        name_part: 'selected'
+    ListFiltButton:
+        id: listFilterUnselected
+        name_part: 'unselected'
+
+
+<FlowPathJumperOpenPopup@FlowDropDown>:
+    child_data_maps:
+        [dict(cls='NodeJumpButton', kwargs=dict(text=txt)) for txt in app.main_app.flow_path_quick_jump_nodes()]
+
+
+<NodeJumpButton@FlowButton>:
+    tap_flow_id: id_of_flow('jump', 'node', self.text)
+    square_fill_color: Window.clearcolor
+    on_alt_tap: app.main_app.show_extract_options(self, flow_path_text=self.text)
+
+
+<ListFiltButton>:
+    # self.state/.icon_name DOES NOT get updated directly on app_states change if using app_states.get():
+    # state: 'down' if app.app_states.get(self.filter_name) else 'normal'
+    state: 'down' if self.filter_name in app.app_states and app.app_states[self.filter_name] else 'normal'
+    name_part: ''
+    color_name: self.name_part + '_item_ink'
+    filter_name: 'filter_' + self.name_part
+    tap_flow_id: id_of_flow('toggle', 'filter', self.filter_name)    # for help mode and help_id
+    help_id: app.main_app.help_flow_id(self.tap_flow_id)
+    icon_name: 'filter_on' if self.filter_name in app.app_states and app.app_states[self.filter_name] else 'filter_off'
+    circle_fill_color: app.app_states[self.color_name] if self.name_part else (.99, .69, .39, 0)
+    size_hint_x: None
+    width: self.height
+
+
+<NodeItem>:
+    majority_sel: root.item_data.get('sel', 0.0) >= 0.5
+    size_hint_y: None
+    padding: self.space
+    height: app.main_app.font_size * 1.5 + 2 * self.space
+    canvas.after:
+        Color:
+            rgba: app.main_app.flow_id_ink[:3] + (1 if flow_key(app.main_app.flow_id) == root.item_data['id'] else 0, )
+        Line:
+            width: self.space
+            rounded_rectangle: self.x, self.y, self.width, self.height, self.space * 3
+    OptionalButton:
+        tap_flow_id: id_of_flow('enter', 'item', root.item_data['id'])
+        circle_fill_color: app.main_app.flow_path_ink
+        visible: 'node' in root.item_data
+        width: self.height * 2.1
+    SelectItemButton:
+        tap_flow_id: id_of_flow('confirm' if 'node' in root.item_data else 'change', 'item_sel', root.item_data['id'])
+        tap_kwargs:
+            dict(set_sel_to=not root.majority_sel, \
+            popup_kwargs=dict(item_id=root.item_data['id'], set_sel_to=not root.majority_sel))
+        square_fill_color: app.main_app.selected_item_ink if root.majority_sel else app.main_app.unselected_item_ink
+        text: root.item_data['id']
+        size_hint_x: root.sel_majority_size_hint_x
+        on_alt_tap: app.main_app.show_extract_options(self, item=root.item_data, sel_status=root.majority_sel)
+    OptionalButton:
+        tap_flow_id: id_of_flow('confirm', 'item_sel', root.item_data['id'])
+        tap_kwargs: dict(popup_kwargs=dict(item_id=root.item_data['id'], set_sel_to=root.majority_sel))
+        square_fill_color: app.main_app.unselected_item_ink if root.majority_sel else app.main_app.selected_item_ink
+        visible: 'node' in root.item_data and root.sel_minority_size_hint_x
+        size_hint_x: root.sel_minority_size_hint_x
+        on_alt_tap: app.main_app.show_extract_options(self, item=root.item_data, sel_status=not root.majority_sel)
+    OptionalButton:
+        id: dragHandle
+        tap_flow_id: id_of_flow('drag', 'item', root.item_data['id'])
+        square_fill_color: app.main_app.flow_id_ink
+        visible: not (app.main_app.filter_selected or app.main_app.filter_unselected)
+
+
+<SelectItemButton@FlowButton>:
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+    shorten: True
+    shorten_from: 'right'
+    split_str: '..'
+    padding_x: sp(9)
+
+
+<ItemEditor@FlowPopup>:
+    on_dismiss: app.main_app.edit_item_finished(root.title, itemTextInp.text, itemIsListInp.state)
+    BoxLayout:
+        FlowToggler:
+            id: itemIsListInp
+            tap_flow_id: id_of_flow('toggle', 'node_or_item')
+            icon_name: id_of_flow('enter', 'item')
+            help_vars: dict(new_flow_id=self.tap_flow_id, self=self, root=root)
+            circle_fill_color: app.main_app.flow_path_ink if self.state == 'down' else (0.69, 0.69, 0.69, 0.69)
+            size_hint_x: 0.21 if self.state == 'down' else 0.09
+            padding_x: sp(9)
+            state: 'down' if 'node' in app.main_app.item_by_id(root.title) else 'normal'
+        FlowInput:
+            id: itemTextInp
+            tap_flow_id: id_of_flow('change', 'item_id')
+            text: root.title
+            focus: True
+            multiline: False
+            size_hint_x: 0.75
+            height: self.font_size * 1.5
+            # in BoxLayout use padding (label alignment (using halign/valign) is not working for TextInput widgets)
+            padding: sp(9), (self.height - self.line_height) / 2.0
+
+
+<ItemDeletionConfirmPopup>:
+    parent_popup_to_close: None
+    item_id: self.item_id or flow_key(app.main_app.flow_id)
+    node_only: False
+    sub_ids: app.main_app.sub_item_ids(item_id=root.item_id)
+    title:
+        _("... loading ...") if root.item_id is None or root.node_only is None else \
+        _("confirm deletion of ") + (_("{count} sub-items of '{root.item_id}'", count=len(root.sub_ids)) \
+        if self.node_only else _("item '{root.item_id}'") \
+        + (_(" including their {count} sub-items", count=len(root.sub_ids)) if subItemIdsLabel.text else ""))
+    size_hint: 0.9, 0.9 if subItemIdsLabel.text else app.main_app.font_size * 6.9 / Window.height
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: Window.clearcolor
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+        ScrollView:
+            Label:
+                id: subItemIdsLabel
+                text: "\n".join(root.sub_ids)
+                color: app.font_color
+                font_size: app.main_app.font_size
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
+                halign: 'left'
+                valign: 'top'
+        FlowButton:
+            tap_flow_id: id_of_flow('delete', 'item', root.item_id)
+            tap_kwargs:
+                dict(popups_to_close=((root.parent_popup_to_close, ) if root.parent_popup_to_close else ()) + (root, ),\
+                del_node=root.node_only)
+            square_fill_color: app.main_app.flow_id_ink
+            fill_pos: root.center_x - self.fill_size[0] / 2, root.y + sp(15)
+            fill_size: self.height * 1.5, self.height
+            size_hint: 1, (app.main_app.font_size * 2.1) / (Window.height * 0.9) if subItemIdsLabel.text else None
+            height: self.height if subItemIdsLabel.text else self.font_size * 2.1
+
+
+<ItemSelConfirmPopup>:
+    item_id: self.item_id or flow_key(app.main_app.flow_id)
+    set_sel_to: None
+    sub_ids: app.main_app.sub_item_ids(item_id=root.item_id, hide_sel_val=root.set_sel_to)
+    title:
+        _("... loading ...") if root.item_id is None or root.set_sel_to is None else \
+        _("confirm selection of {count} sub-items in '{root.item_id}'" if self.set_sel_to else \
+        "confirm deselection of {count} sub-items in '{root.item_id}'", count=len(self.sub_ids))
+    size_hint: 0.9, 0.9 if len(root.sub_ids) > 6 else app.main_app.font_size * 12 / Window.height
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: Window.clearcolor
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+        ScrollView:
+            Label:
+                text: "\n".join(root.sub_ids)
+                color: app.font_color
+                font_size: app.main_app.font_size
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
+                halign: 'left'
+                valign: 'top'
+        FlowButton:
+            tap_flow_id: id_of_flow('change', 'item_sel', root.item_id)
+            tap_kwargs: dict(set_sel_to=root.set_sel_to, popups_to_close=(root, ))
+            square_fill_color: app.app_states['selected_item_ink' if root.set_sel_to else 'unselected_item_ink']
+            text: _("select" if root.set_sel_to else "deselect")
+            size_hint: 1, (app.main_app.font_size * 2.1) / (Window.height * 0.9) if len(root.sub_ids) > 6 else None
+            height: self.height if len(root.sub_ids) > 6 else self.font_size * 2.1
+
+
+<DropPlaceholder>:
+    size_hint_y: None
+    canvas:
+        Color:
+            rgba: app.main_app.flow_id_ink if root.destination == 'current' else app.main_app.flow_path_ink
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: Window.clearcolor[:3] + (0.6, )
+        Ellipse:
+            pos: root.x + root.width / 9, root.y + root.height / 9
+            size: root.width * 7 / 9, root.height * 7 / 9
+        Color:
+            rgba: (1, 1, 1, 0.6)
+        Ellipse:
+            pos: root.x + root.width / 3, root.y + root.height / 6
+            size: root.width / 3, root.height * 2 / 3
+            source: app.main_app.img_file(id_of_flow(self.destination, 'item'))
+
+
+<AltAddOpenPopup@FlowDropDown>:
+
+<ExtractOpenPopup@FlowDropDown>:
+
+<ImportNodeOpenPopup@FlowDropDown>:
+
+<NodeInfoOpenPopup>:
+    child_data_maps:
+        [dict(cls='ImageLabel', kwargs=dict(text=_(k.replace('_', ' ')) + ": " + str(v)))
+        for k, v in self.node_info.items()]
